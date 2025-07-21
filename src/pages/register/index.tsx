@@ -1,7 +1,65 @@
-import React from "react";
+import {
+  TextInput,
+  Button,
+  PasswordInput,
+  Box,
+  Radio,
+  Group,
+} from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { registerSchema } from "../../utils/validations";
+import { yupSyncResolver } from "../../utils/helper";
 
 const Register = () => {
-  return <div>Register</div>;
+  const { getInputProps, onSubmit } = useForm({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      role: "user",
+    },
+    validate: yupSyncResolver(registerSchema),
+    validateInputOnChange: true,
+  });
+  return (
+    <Box>
+      <form
+        onSubmit={onSubmit((values) => {
+          console.log(values);
+        })}
+      >
+        <TextInput
+          withAsterisk
+          label="Name"
+          placeholder="Enter a name"
+          {...getInputProps("name")}
+        />
+        <TextInput
+          withAsterisk
+          label="Email"
+          placeholder="Enter an email"
+          {...getInputProps("email")}
+        />
+        <PasswordInput
+          withAsterisk
+          label="Password"
+          placeholder="Enter a password"
+          {...getInputProps("password")}
+        />
+        <Radio.Group
+          label="Select your role"
+          withAsterisk
+          {...getInputProps("role")}
+        >
+          <Group>
+            <Radio value="admin" label="Admin" />
+            <Radio value="user" label="User" />
+          </Group>
+        </Radio.Group>
+        <Button type="submit">Register</Button>
+      </form>
+    </Box>
+  );
 };
 
 export default Register;
