@@ -14,7 +14,7 @@ const axiosConfig = {
   baseURL: "http://localhost:3000",
   withCredentials: true,
   headers: {
-    "Content-Type": "applications/json",
+    "Content-Type": "application/json",
   },
 };
 
@@ -29,3 +29,19 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => Promise.reject(error)
 );
+
+const client = ({
+  method = METHODS.GET,
+  url = "",
+  data = undefined as any,
+  ...rest
+}: {
+  method?: string;
+  url?: string;
+  data?: any;
+  [key: string]: any;
+}) => {
+  return axiosInstance({ method, url, data, withCredentials: true, ...rest });
+};
+
+export default client;
