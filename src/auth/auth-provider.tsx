@@ -1,19 +1,35 @@
 import { createContext, type ReactNode, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
-const AuthContext = createContext<unknown>(undefined);
+
+interface User {
+  id: number;
+  email: string;
+  role: "admin" | "user";
+}
+interface AuthContextType {
+  user: User | null;
+  token: string | null;
+  isAuth: boolean;
+  isAdmin: boolean;
+  login: (token: string) => void;
+  logout: () => void;
+}
+const AuthContext = createContext<AuthContextType | unknown>(undefined);
 
 interface AuthProviderProps {
   children: ReactNode;
 }
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [token, setToken] = useState(() => localStorage.getItem("token")); // Lazy initialization of token
-  const [user, setUser] = useState(null);
+  const [token, setToken] = useState<string | null>(() =>
+    localStorage.getItem("token")
+  ); // Lazy initialization of token
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     if (token) {
       try {
-        const decoded = jwtDecode(token);
+        const decoded = jwtDecode<User>(token);
         setUser(decoded);
       } catch (error) {
         console.error("Invalid");
