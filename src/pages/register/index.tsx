@@ -8,7 +8,7 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { registerSchema } from "../../utils/validations";
-import { yupSyncResolver } from "../../utils/helper";
+import { yupResolver } from "../../utils/helper";
 
 const Register = () => {
   const { getInputProps, onSubmit } = useForm({
@@ -18,7 +18,7 @@ const Register = () => {
       password: "",
       role: "user",
     },
-    validate: yupSyncResolver(registerSchema),
+    validate: yupResolver(registerSchema),
     validateInputOnChange: true,
   });
   return (
