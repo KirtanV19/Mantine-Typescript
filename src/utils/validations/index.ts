@@ -1,19 +1,35 @@
 import * as yup from "yup";
+import { VALIDATION_MESSAAGE as message } from "../constants";
+import { regex } from "./regex";
+import { ROLES } from "../constants";
+const { hasDigit, hasLowercaseLetter, hasSpecialChar, hasUppercaseLetter } =
+  regex;
+
+const {
+  passwordDigit,
+  passwordLength,
+  passwordLower,
+  passwordSpecial,
+  passwordUpper,
+  required,
+  roleRequired,
+  invalid,
+} = message;
 
 // Register Schema
-export const registerSchema = yup.object().shape({
-  name: yup.string().required("Name is required"),
-  email: yup.string().email().required("Email is required"),
+export const registerSchema = yup.object({
+  name: yup.string().required(required("name")),
+  email: yup.string().email(invalid("email")).required(required("email")),
   password: yup
     .string()
-    .required("Password is required")
-    .min(8, "Password should be at least 8 characters.")
-    .matches(/[a-z]/, "Password must contain at least one lowercase letter")
-    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .matches(/\d/, "Password must contain at least one number")
-    .matches(
-      /[@$!%*?&#^()\-_=+{};:,<.>]/,
-      "Password must contain at least one special character"
-    ),
-  role: yup.string().required("Role is required"),
+    .required(required("password"))
+    .min(6, passwordLength)
+    .matches(hasLowercaseLetter, passwordLower)
+    .matches(hasUppercaseLetter, passwordUpper)
+    .matches(hasDigit, passwordDigit)
+    .matches(hasSpecialChar, passwordSpecial),
+  role: yup
+    .string()
+    .oneOf(Object.values(ROLES), roleRequired)
+    .required(required("role")),
 });

@@ -9,6 +9,7 @@ import {
 import { useForm } from "@mantine/form";
 import { registerSchema } from "../../utils/validations";
 import { yupResolver } from "../../utils/helper";
+import { ROLES } from "../../utils/constants";
 
 const Register = () => {
   const { getInputProps, onSubmit } = useForm({
@@ -52,8 +53,8 @@ const Register = () => {
           {...getInputProps("role")}
         >
           <Group>
-            <Radio value="admin" label="Admin" />
-            <Radio value="user" label="User" />
+            <Radio value={ROLES.ADMIN} label="Admin" />
+            <Radio value={ROLES.USER} label="User" />
           </Group>
         </Radio.Group>
         <Button type="submit">Register</Button>
