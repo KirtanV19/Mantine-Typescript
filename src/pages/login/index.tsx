@@ -7,6 +7,7 @@ const Login = () => {
   const { getInputProps, onSubmit } = useForm({
     initialValues: { email: "", password: "" },
     validate: yupSyncResolver(loginSchema),
+    validateInputOnChange: true,
   });
 
   return (

@@ -60,3 +60,24 @@ export const apiAsyncHandler = async (
     }
   }
 };
+
+export const errorHandler = (
+  handleTry: () => unknown,
+  handleCatch?: (error: unknown) => unknown,
+  handleFinally?: () => void
+) => {
+  try {
+    const response = handleTry();
+    return response;
+  } catch (error) {
+    logError(error);
+    if (handleCatch && typeof handleCatch === "function") {
+      return handleCatch(error);
+    }
+    return null;
+  } finally {
+    if (handleFinally && typeof handleFinally === "function") {
+      handleFinally();
+    }
+  }
+};
