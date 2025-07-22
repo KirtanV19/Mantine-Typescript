@@ -19,9 +19,14 @@ const {
 // Register Schema
 export const registerSchema = yup.object({
   name: yup.string().required(required("name")),
-  email: yup.string().email(invalid("email")).required(required("email")),
+  email: yup
+    .string()
+    .trim()
+    .email(invalid("email"))
+    .required(required("email")),
   password: yup
     .string()
+    .trim()
     .required(required("password"))
     .min(6, passwordLength)
     .matches(hasLowercaseLetter, passwordLower)
@@ -32,4 +37,14 @@ export const registerSchema = yup.object({
     .string()
     .oneOf(Object.values(ROLES), roleRequired)
     .required(required("role")),
+});
+
+// Login Schema
+export const loginSchema = yup.object({
+  email: yup
+    .string()
+    .trim()
+    .min(1, message.required("email"))
+    .email(message.invalid("email")),
+  password: yup.string().trim().min(1, message.required("password")),
 });
