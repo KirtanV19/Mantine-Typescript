@@ -24,7 +24,7 @@ const ForgotPassword = () => {
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const { onSubmit, getInputProps, reset } = useForm<FormValues>({
+  const { onSubmit, getInputProps, reset, key } = useForm<FormValues>({
     initialValues: { email: "", newPassword: "", confirmPassword: "" },
     validate: yupSyncResolver(forgotPasswordSchema),
     validateInputOnChange: true,
@@ -83,16 +83,19 @@ const ForgotPassword = () => {
               label="Email"
               placeholder="Enter an email"
               {...getInputProps("email")}
+              key={key("email")}
             />
             <PasswordInput
               label="New Password"
               placeholder="Enter a new password"
               {...getInputProps("newPassword")}
+              key={key("newPassword")}
             />
             <PasswordInput
               label="Confirm Password"
               placeholder="Re-enter the password"
               {...getInputProps("confirmPassword")}
+              key={key("confirmPassword")}
             />
             <Button type="submit">Reset Password</Button>
           </Stack>
