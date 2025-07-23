@@ -11,8 +11,10 @@ import { useForm } from "@mantine/form";
 import { registerSchema } from "../../utils/validations";
 import { yupSyncResolver } from "../../utils/helper";
 import { ROLES } from "../../utils/constants";
+import { usePageData } from "../../hooks/use-page-data";
 
 const Register = () => {
+  usePageData();
   const { getInputProps, onSubmit, key } = useForm({
     initialValues: {
       name: "",

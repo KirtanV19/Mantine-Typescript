@@ -2,8 +2,10 @@ import { Center, Button, TextInput, PasswordInput, Stack } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { loginSchema } from "../../utils/validations";
 import { yupSyncResolver } from "../../utils/helper";
+import { usePageData } from "../../hooks/use-page-data";
 
 const Login = () => {
+  usePageData();
   const { getInputProps, onSubmit, key } = useForm({
     initialValues: { email: "", password: "" },
     validate: yupSyncResolver(loginSchema),

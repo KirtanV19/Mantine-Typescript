@@ -13,6 +13,7 @@ import { api } from "../../api";
 import { yupSyncResolver } from "../../utils/helper";
 import { forgotPasswordSchema } from "../../utils/validations";
 import { IconCheck, IconX } from "@tabler/icons-react";
+import { usePageData } from "../../hooks/use-page-data";
 
 interface FormValues {
   email: string;
@@ -21,6 +22,7 @@ interface FormValues {
 }
 
 const ForgotPassword = () => {
+  usePageData();
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
