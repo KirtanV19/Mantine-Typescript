@@ -5,9 +5,9 @@ export const PLAIN_ROUTES = {
   layout: {
     path: "/",
   },
-  HOME: {
+  INDEX: {
     index: true,
-    title: "Home",
+    title: "Welcome",
     url: "/",
   },
   LOGIN: {
@@ -31,6 +31,11 @@ export const AUTH_ROUTES = {
   layout: {
     path: "/admin",
   },
+  INDEX: {
+    index: true,
+    title: "Welcome",
+    url: "/admin",
+  },
   DASHBOARD: {
     roles: [ROLES.ADMIN],
     title: "Admin Dashboard",
@@ -48,6 +53,11 @@ export const AUTH_ROUTES = {
 export const PRIVATE_ROUTES = {
   layout: {
     path: "/user",
+  },
+  INDEX: {
+    index: true,
+    title: "Welcome",
+    url: "/user",
   },
   USER_DASHBOARD: {
     roles: [ROLES.USER],
