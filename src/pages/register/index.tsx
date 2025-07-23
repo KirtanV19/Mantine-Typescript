@@ -2,7 +2,7 @@ import {
   TextInput,
   Button,
   PasswordInput,
-  Box,
+  Center,
   Radio,
   Group,
   Stack,
@@ -25,7 +25,7 @@ const Register = () => {
   });
 
   return (
-    <Box>
+    <Center>
       <form
         onSubmit={onSubmit((values) => {
           console.log(values);
@@ -67,7 +67,7 @@ const Register = () => {
           <Button type="submit">Register</Button>
         </Stack>
       </form>
-    </Box>
+    </Center>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Box, Button, TextInput, PasswordInput, Stack } from "@mantine/core";
+import { Center, Button, TextInput, PasswordInput, Stack } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { loginSchema } from "../../utils/validations";
 import { yupSyncResolver } from "../../utils/helper";
@@ -11,7 +11,7 @@ const Login = () => {
   });
 
   return (
-    <Box>
+    <Center>
       <form
         onSubmit={onSubmit((values) => {
           console.log(values);
@@ -33,7 +33,7 @@ const Login = () => {
           <Button type="submit">Login</Button>
         </Stack>
       </form>
-    </Box>
+    </Center>
   );
 };
 
