@@ -1,6 +1,6 @@
 import { Box, Flex, Group, Anchor, Container } from "@mantine/core";
 
-const Navbar = () => {
+const PlainNavbar = () => {
   return (
     <Box bg="blue.6" py="sm">
       <Container size="xl">
@@ -26,7 +26,7 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default PlainNavbar;
 
 /**
 | Feature       | `Box`                     | `Stack`                          | `Group`                         |

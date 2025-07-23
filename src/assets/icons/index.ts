@@ -47,6 +47,8 @@ import {
   IconSearch,
   IconDatabaseX,
   IconBug,
+  IconDashboard,
+  IconListDetails,
 } from "@tabler/icons-react";
 
 export const ICONS = {
@@ -98,4 +100,6 @@ export const ICONS = {
   IconSearch,
   IconDatabaseX,
   IconBug,
+  IconDashboard,
+  IconListDetails,
 };
