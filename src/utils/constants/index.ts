@@ -18,3 +18,10 @@ export const VALIDATION_MESSAAGE = {
   roleRequired: "Please select a role",
   passwordMatch: "Passwords must match",
 };
+
+export const taskSelection = [
+  {
+    label: "Pending",
+    value: "pending",
+  },
+];

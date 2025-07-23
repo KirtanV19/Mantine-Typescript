@@ -42,20 +42,13 @@ export const registerSchema = yup.object({
 
 // Login Schema
 export const loginSchema = yup.object({
-  email: yup
-    .string()
-    .trim()
-    .min(1, message.required("email"))
-    .email(message.invalid("email")),
-  password: yup.string().trim().min(1, message.required("password")),
+  email: yup.string().trim().min(1, required("email")).email(invalid("email")),
+  password: yup.string().trim().min(1, required("password")),
 });
 
-export const forgotPasswordSchema = yup.object().shape({
-  email: yup
-    .string()
-    .trim()
-    .min(1, message.required("email"))
-    .email(message.invalid("email")),
+// Forgot Password Schema
+export const forgotPasswordSchema = yup.object({
+  email: yup.string().trim().min(1, required("email")).email(invalid("email")),
   newPassword: yup
     .string()
     .min(6, passwordLength)
@@ -66,4 +59,23 @@ export const forgotPasswordSchema = yup.object().shape({
     .string()
     .oneOf([yup.ref("newPassword")], passwordMatch)
     .required("Confirm your password"),
+});
+
+// Task Creation Schema
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+export const taskSchema = yup.object({
+  title: yup.string().min(1, required("title")),
+  description: yup.string().min(1, required("description")),
+  status: yup.string().min(1, required("status")),
+  dueDate: yup
+    .string()
+    .required("Due date is required")
+    .test("min", "Due date cannot be in the past", function (value) {
+      if (!value) return false;
+      const selected = new Date(value);
+      selected.setHours(0, 0, 0, 0);
+      return selected >= today;
+    }),
 });
