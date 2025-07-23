@@ -12,8 +12,9 @@ import { useState } from "react";
 import { api } from "../../api";
 import { yupSyncResolver } from "../../utils/helper";
 import { forgotPasswordSchema } from "../../utils/validations";
-import { IconCheck, IconX } from "@tabler/icons-react";
+import { ICONS } from "../../assets/icons";
 import { usePageData } from "../../hooks/use-page-data";
+import Icon from "../../assets/icons/icons";
 
 interface FormValues {
   email: string;
@@ -65,7 +66,7 @@ const ForgotPassword = () => {
       <Box>
         {success && (
           <Notification
-            icon={<IconCheck />}
+            icon={<Icon component={ICONS.IconCheck} stroke={1} />}
             color="green"
             title="Success"
             mt="md"
@@ -75,7 +76,12 @@ const ForgotPassword = () => {
         )}
 
         {error && (
-          <Notification icon={<IconX />} color="red" title="Error" mt="md">
+          <Notification
+            icon={<Icon component={ICONS.IconX} stroke={1} />}
+            color="red"
+            title="Error"
+            mt="md"
+          >
             {error}
           </Notification>
         )}
