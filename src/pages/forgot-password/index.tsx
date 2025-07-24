@@ -15,6 +15,7 @@ import { forgotPasswordSchema } from "../../utils/validations";
 import { ICONS } from "../../assets/icons";
 import { usePageData } from "../../hooks/use-page-data";
 import Icon from "../../assets/icons/icons";
+import { apiAsyncHandler } from "../../utils/helper";
 
 interface FormValues {
   email: string;
@@ -37,27 +38,33 @@ const ForgotPassword = () => {
     setError(null);
     setSuccess(null);
 
-    try {
-      const { data } = await api.tasks.getAll({
-        params: { email: values.email },
-      });
+    // 1. Find user by email
+    const userRes = await apiAsyncHandler(
+      () => api.users.getAll({ params: { email: values.email } }),
+      () => setError("Failed to fetch user")
+    );
 
-      if (data.length === 0) {
-        setError("Email not found!");
-        return;
-      }
+    console.log("userRes: ", userRes);
+    if (!userRes || !userRes.data || userRes.data.length === 0) {
+      setError("Email not found!");
+      return;
+    }
 
-      const user = data[0];
+    const user = userRes.data[0];
 
-      await api.users.patch({
-        id: user.id,
-        data: { password: values.newPassword },
-      });
+    // 2. Update password
+    const patchRes = await apiAsyncHandler(
+      () =>
+        api.users.patch({
+          id: user.id,
+          data: { password: values.newPassword },
+        }),
+      () => setError("Failed to reset password")
+    );
 
+    if (patchRes) {
       setSuccess("Password updated successfully!");
       reset();
-    } catch (err: any) {
-      setError("Failed to reset password");
     }
   };
 

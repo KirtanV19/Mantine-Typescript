@@ -6,16 +6,32 @@ import {
   Radio,
   Group,
   Stack,
+  Box,
+  Notification,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { registerSchema } from "../../utils/validations";
-import { yupSyncResolver } from "../../utils/helper";
+import { yupSyncResolver, apiAsyncHandler } from "../../utils/helper";
 import { ROLES } from "../../utils/constants";
 import { usePageData } from "../../hooks/use-page-data";
+import { api } from "../../api";
+import { useState } from "react";
+import Icon from "../../assets/icons/icons";
+import { ICONS } from "../../assets/icons";
+
+interface FormValues {
+  name: string;
+  email: string;
+  password: string;
+  role: string;
+}
 
 const Register = () => {
   usePageData();
-  const { getInputProps, onSubmit, key } = useForm({
+  const [success, setSuccess] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const { getInputProps, onSubmit, key, reset } = useForm({
     initialValues: {
       name: "",
       email: "",
@@ -26,49 +42,84 @@ const Register = () => {
     validateInputOnChange: true,
   });
 
+  const handleSubmit = async (values: FormValues) => {
+    setError(null);
+    setSuccess(null);
+    const response = await apiAsyncHandler(
+      () => api.users.create({ data: values }),
+      () => setError("Failed to create user")
+    );
+
+    console.log("response: ", response);
+
+    if (response) {
+      setSuccess("User created successfully!");
+      reset();
+    }
+  };
+
   return (
     <Center>
-      <form
-        onSubmit={onSubmit((values) => {
-          console.log(values);
-        })}
-      >
-        <Stack>
-          <TextInput
-            withAsterisk
-            label="Name"
-            placeholder="Enter a name"
-            {...getInputProps("name")}
-            key={key("name")}
-          />
-          <TextInput
-            withAsterisk
-            label="Email"
-            placeholder="Enter an email"
-            {...getInputProps("email")}
-            key={key("email")}
-          />
-          <PasswordInput
-            withAsterisk
-            label="Password"
-            placeholder="Enter a password"
-            {...getInputProps("password")}
-            key={key("password")}
-          />
-          <Radio.Group
-            label="Select your role"
-            withAsterisk
-            {...getInputProps("role")}
-            key={key("role")}
+      <Box>
+        {success && (
+          <Notification
+            icon={<Icon component={ICONS.IconCheck} stroke={1} />}
+            color="green"
+            title="Success"
+            mt="md"
           >
-            <Group>
-              <Radio value={ROLES.ADMIN} label="Admin" />
-              <Radio value={ROLES.USER} label="User" />
-            </Group>
-          </Radio.Group>
-          <Button type="submit">Register</Button>
-        </Stack>
-      </form>
+            {success}
+          </Notification>
+        )}
+
+        {error && (
+          <Notification
+            icon={<Icon component={ICONS.IconX} stroke={1} />}
+            color="red"
+            title="Error"
+            mt="md"
+          >
+            {error}
+          </Notification>
+        )}
+        <form onSubmit={onSubmit(handleSubmit)}>
+          <Stack>
+            <TextInput
+              withAsterisk
+              label="Name"
+              placeholder="Enter a name"
+              {...getInputProps("name")}
+              key={key("name")}
+            />
+            <TextInput
+              withAsterisk
+              label="Email"
+              placeholder="Enter an email"
+              {...getInputProps("email")}
+              key={key("email")}
+            />
+            <PasswordInput
+              withAsterisk
+              label="Password"
+              placeholder="Enter a password"
+              {...getInputProps("password")}
+              key={key("password")}
+            />
+            <Radio.Group
+              label="Select your role"
+              withAsterisk
+              {...getInputProps("role")}
+              key={key("role")}
+            >
+              <Group>
+                <Radio value={ROLES.ADMIN} label="Admin" />
+                <Radio value={ROLES.USER} label="User" />
+              </Group>
+            </Radio.Group>
+            <Button type="submit">Register</Button>
+          </Stack>
+        </form>
+      </Box>
     </Center>
   );
 };
