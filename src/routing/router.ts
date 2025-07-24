@@ -1,4 +1,5 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 // Routes
 import { PLAIN_ROUTES, AUTH_ROUTES, PRIVATE_ROUTES } from "./routes";
@@ -33,6 +34,22 @@ export const router = createBrowserRouter([
   {
     ...AUTH_ROUTES.layout,
     Component: AuthLayout,
+    loader: () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const user = jwtDecode(token) as { role?: string };
+          if (user?.role === "admin") {
+            return redirect(AUTH_ROUTES.DASHBOARD.url);
+          }
+        } catch (e) {
+          console.error(e);
+          return redirect(PLAIN_ROUTES.LOGIN.url);
+        }
+      }
+      return null;
+    },
+
     children: [
       { ...AUTH_ROUTES.INDEX, Component: WelcomeUser },
       { ...AUTH_ROUTES.DASHBOARD, Component: Tasks },

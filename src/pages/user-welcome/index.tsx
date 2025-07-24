@@ -1,6 +1,9 @@
 import { Paper, Title, Text, Stack, Box } from "@mantine/core";
+import useAuth from "../../auth/use-auth";
 
 const WelcomeUser = () => {
+  const { user } = useAuth() as any;
+  console.log("user: ", user);
   return (
     <Paper
       radius="md"
@@ -8,7 +11,7 @@ const WelcomeUser = () => {
       shadow="xl"
       withBorder
       style={{
-        background: "linear-gradient(135deg, #f8fafc, #e2e8f0)", // softer gray-blue gradient
+        background: "linear-gradient(135deg, #f8fafc, #2a456aff)", // softer gray-blue gradient
       }}
     >
       <Stack gap="xs">
@@ -22,12 +25,11 @@ const WelcomeUser = () => {
               fontWeight: 700,
             }}
           >
-            Welcome back!
+            Welcome {user?.name}!
           </Title>
         </Box>
         <Text size="sm" c="dimmed">
-          We're glad to see you again. Use the sidebar to manage your tasks or
-          create something new!
+          We're glad to see you again.
         </Text>
       </Stack>
     </Paper>
