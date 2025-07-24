@@ -35,9 +35,6 @@ const ForgotPassword = () => {
   });
 
   const handleSubmit = async (values: FormValues) => {
-    setError(null);
-    setSuccess(null);
-
     // 1. Find user by email
     const userRes = await apiAsyncHandler(
       () => api.users.getAll({ params: { email: values.email } }),
@@ -45,12 +42,12 @@ const ForgotPassword = () => {
     );
 
     console.log("userRes: ", userRes);
-    if (!userRes || !userRes.data || userRes.data.length === 0) {
+    if (!userRes || !userRes?.data || userRes?.data?.length === 0) {
       setError("Email not found!");
       return;
     }
 
-    const user = userRes.data[0];
+    const user = userRes?.data[0];
 
     // 2. Update password
     const patchRes = await apiAsyncHandler(

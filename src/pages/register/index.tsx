@@ -43,8 +43,6 @@ const Register = () => {
   });
 
   const handleSubmit = async (values: FormValues) => {
-    setError(null);
-    setSuccess(null);
     const response = await apiAsyncHandler(
       () => api.users.create({ data: values }),
       () => setError("Failed to create user")

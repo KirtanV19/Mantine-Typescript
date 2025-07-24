@@ -10,18 +10,6 @@ const Tasks = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState<string | null>(null);
 
-  // useEffect(() => {
-  //   apiAsyncHandler(() => api.tasks.getAll({})).then((response) => {
-  //     if (!response || !response.data || response.data.length === 0) {
-  //       setError("No items found!");
-  //       setData([]);
-  //     } else {
-  //       setData(response.data);
-  //       setError(null);
-  //     }
-  //   });
-  // }, []);
-
   useEffect(() => {
     apiAsyncHandler(
       async () => {

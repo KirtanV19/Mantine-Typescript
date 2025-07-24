@@ -11,8 +11,10 @@ import { yupSyncResolver } from "../../utils/helper";
 import { taskSchema } from "../../utils/validations";
 import { DateInput } from "@mantine/dates";
 import { taskSelection } from "../../utils/constants";
+import { usePageData } from "../../hooks/use-page-data";
 
 const UserTask = () => {
+  usePageData();
   const { getInputProps, onSubmit, key } = useForm({
     initialValues: {
       title: "",

@@ -34,8 +34,6 @@ const Login = () => {
   });
 
   const handleSubmit = async (values: FormValues) => {
-    setError(null);
-
     console.log("values", values);
 
     const response = await apiAsyncHandler(() =>
@@ -43,7 +41,7 @@ const Login = () => {
     );
     console.log("response", response);
 
-    if (!response || !response.data || response.data.length === 0) {
+    if (!response || !response?.data || response?.data?.length === 0) {
       setError("Email not found!");
       return;
     }

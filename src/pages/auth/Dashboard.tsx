@@ -56,14 +56,14 @@ const Dashboard = () => {
       render: ({ row }) => (
         <Box>
           <Button
-          // onClick={() => handleAccept(row.id)}
-          // disabled={row.status === "accepted"}
+            // onClick={() => handleAccept(row.id)}
+            disabled={row.status === "accepted"}
           >
             Accept
           </Button>
           <Button
-          // onClick={() => handleReject(row.id)}
-          // disabled={row.status === "rejected"}
+            // onClick={() => handleReject(row.id)}
+            disabled={row.status === "rejected"}
           >
             Reject
           </Button>
