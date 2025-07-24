@@ -38,13 +38,21 @@ export const router = createBrowserRouter([
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const user = jwtDecode(token) as { role?: string };
-          if (user?.role === "admin") {
+          const decoded = jwtDecode(token) as { exp?: number; role?: string };
+
+          // Check expiration (optional, based on JWT claims)
+          if (decoded.exp && Date.now() >= decoded.exp * 1000) {
+            return redirect("/login"); // Token expired
+          }
+
+          if (decoded.role === "admin") {
             return redirect(AUTH_ROUTES.DASHBOARD.url);
           }
-        } catch (e) {
-          console.error(e);
-          return redirect(PLAIN_ROUTES.LOGIN.url);
+
+          return null; // Allow route to render
+        } catch (err) {
+          console.error(err);
+          return redirect(PLAIN_ROUTES.LOGIN.url); // Invalid token
         }
       }
       return null;
@@ -67,3 +75,37 @@ export const router = createBrowserRouter([
   },
   { path: "*", Component: PageNotFound },
 ]);
+
+/**
+ 
+✅ Final Note on loader with Authentication in React Router:-
+
+1.Purpose of loader
+
+->The loader function in React Router is used to pre-fetch data or perform logic before the route's component renders.
+->You can also use it to protect routes by checking authentication and redirecting if necessary.
+
+2.Typical Authentication Flow in a loader
+
+->Get the token from localStorage (or cookie/session).
+->Decode and validate the token (e.g. using jwt-decode).
+->If the token is invalid or expired, redirect to login.
+->If valid, return data (or just allow access by returning null).
+
+3.Return Values
+
+->If you want to allow access: return null or some pre-fetched data.
+
+->If you want to redirect: use return redirect("/some-path").
+
+4.Token Validation
+
+->Validation includes:
+
+ i.Checking if token exists.
+
+ ii.Decoding it to check role/expiry.
+
+ iii.Redirecting based on role or validity.
+
+ */

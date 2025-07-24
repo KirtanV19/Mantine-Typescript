@@ -16,6 +16,7 @@ import useAuth from "../../auth/use-auth";
 import { useState } from "react";
 import Icon from "../../assets/icons/icons";
 import { ICONS } from "../../assets/icons";
+import { AUTH_MESSAGES } from "../../utils/constants";
 
 interface FormValues {
   email: string;
@@ -24,6 +25,7 @@ interface FormValues {
 
 const Login = () => {
   usePageData();
+  const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { login } = useAuth() as any;
 
@@ -42,11 +44,12 @@ const Login = () => {
     console.log("response", response);
 
     if (!response || !response?.data || response?.data?.length === 0) {
-      setError("Email not found!");
+      setError(AUTH_MESSAGES.notFound("email"));
       return;
     }
 
     if (response?.data[0]?.email === values.email) {
+      setSuccess(AUTH_MESSAGES.login);
       login();
     }
   };
@@ -54,11 +57,21 @@ const Login = () => {
   return (
     <Center>
       <Box>
+        {success && (
+          <Notification
+            icon={<Icon component={ICONS.IconCheck} stroke={1} />}
+            color="green"
+            title={AUTH_MESSAGES.login}
+            mt="md"
+          >
+            {success}
+          </Notification>
+        )}
         {error && (
           <Notification
             icon={<Icon component={ICONS.IconX} stroke={1} />}
             color="red"
-            title="Error"
+            title={AUTH_MESSAGES.notFound("email")}
             mt="md"
           >
             {error}

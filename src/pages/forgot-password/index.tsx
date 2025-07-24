@@ -16,6 +16,7 @@ import { ICONS } from "../../assets/icons";
 import { usePageData } from "../../hooks/use-page-data";
 import Icon from "../../assets/icons/icons";
 import { apiAsyncHandler } from "../../utils/helper";
+import { AUTH_MESSAGES } from "../../utils/constants";
 
 interface FormValues {
   email: string;
@@ -38,12 +39,12 @@ const ForgotPassword = () => {
     // 1. Find user by email
     const userRes = await apiAsyncHandler(
       () => api.users.getAll({ params: { email: values.email } }),
-      () => setError("Failed to fetch user")
+      () => setError(AUTH_MESSAGES.invalidLogin)
     );
 
     console.log("userRes: ", userRes);
     if (!userRes || !userRes?.data || userRes?.data?.length === 0) {
-      setError("Email not found!");
+      setError(AUTH_MESSAGES.invalidLogin);
       return;
     }
 
@@ -56,11 +57,11 @@ const ForgotPassword = () => {
           id: user.id,
           data: { password: values.newPassword },
         }),
-      () => setError("Failed to reset password")
+      () => setError(AUTH_MESSAGES.failurePassword)
     );
 
     if (patchRes) {
-      setSuccess("Password updated successfully!");
+      setSuccess(AUTH_MESSAGES.resetPassword);
       reset();
     }
   };
@@ -72,7 +73,7 @@ const ForgotPassword = () => {
           <Notification
             icon={<Icon component={ICONS.IconCheck} stroke={1} />}
             color="green"
-            title="Success"
+            title={AUTH_MESSAGES.resetPassword}
             mt="md"
           >
             {success}
@@ -83,7 +84,7 @@ const ForgotPassword = () => {
           <Notification
             icon={<Icon component={ICONS.IconX} stroke={1} />}
             color="red"
-            title="Error"
+            title={AUTH_MESSAGES.failurePassword}
             mt="md"
           >
             {error}

@@ -18,6 +18,7 @@ import { api } from "../../api";
 import { useState } from "react";
 import Icon from "../../assets/icons/icons";
 import { ICONS } from "../../assets/icons";
+import { AUTH_MESSAGES } from "../../utils/constants";
 
 interface FormValues {
   name: string;
@@ -45,13 +46,13 @@ const Register = () => {
   const handleSubmit = async (values: FormValues) => {
     const response = await apiAsyncHandler(
       () => api.users.create({ data: values }),
-      () => setError("Failed to create user")
+      () => setError(AUTH_MESSAGES.failure)
     );
 
     console.log("response: ", response);
 
     if (response) {
-      setSuccess("User created successfully!");
+      setSuccess(AUTH_MESSAGES.successful("user"));
       reset();
     }
   };
@@ -63,7 +64,7 @@ const Register = () => {
           <Notification
             icon={<Icon component={ICONS.IconCheck} stroke={1} />}
             color="green"
-            title="Success"
+            title={AUTH_MESSAGES.successful("user")}
             mt="md"
           >
             {success}
@@ -74,7 +75,7 @@ const Register = () => {
           <Notification
             icon={<Icon component={ICONS.IconX} stroke={1} />}
             color="red"
-            title="Error"
+            title={AUTH_MESSAGES.failure}
             mt="md"
           >
             {error}

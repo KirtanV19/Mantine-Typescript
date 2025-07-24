@@ -7,7 +7,7 @@ export const ROLES = {
 
 export const APP_TITLE = "Taskboard";
 
-export const VALIDATION_MESSAAGE = {
+export const VALIDATION_MESSAGE = {
   required: (text: string) => `${capitalize(text)} is required`,
   invalid: (text: string) => `${capitalize(text)} invalid`,
   passwordLength: "Password should be at least 6 characters.",
@@ -25,3 +25,14 @@ export const taskSelection = [
     value: "pending",
   },
 ];
+
+export const AUTH_MESSAGES = {
+  successful: (text: string) => `${capitalize(text)} creates successfully!`,
+  notFound: (text: string) => `${capitalize(text)} not found`,
+  failure: "Failed to create user",
+  login: "Login successful.",
+  invalidLogin: "Invalid credentials.",
+  resetPassword: "Your password has been reset successfully.",
+  failurePassword: "Failed to reset password",
+  logout: "You have been logged out.",
+};
