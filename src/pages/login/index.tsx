@@ -21,12 +21,14 @@ const Login = () => {
       >
         <Stack>
           <TextInput
+            withAsterisk
             label="Email"
             placeholder="Enter an email"
             {...getInputProps("email")}
             key={key("email")}
           />
           <PasswordInput
+            withAsterisk
             label="Password"
             placeholder="Enter a password"
             {...getInputProps("password")}

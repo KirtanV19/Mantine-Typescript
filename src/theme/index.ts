@@ -4,6 +4,7 @@ import {
   TextInput,
   localStorageColorSchemeManager,
   rem,
+  PasswordInput,
 } from "@mantine/core";
 import {
   primary,
@@ -40,17 +41,17 @@ export const theme = createTheme({
     },
   },
   spacing: {
-    xs: rem(8),
-    sm: rem(12),
+    xs: rem(12),
+    sm: rem(14),
     md: rem(16),
-    lg: rem(24),
-    xl: rem(32),
+    lg: rem(18),
+    xl: rem(20),
   },
   components: {
     Button: Button.extend({
       defaultProps: {
-        variant: "subtle",
-        radius: "xl",
+        variant: "filled",
+        radius: "md",
         size: "sm",
         color: "primary",
       },
@@ -68,16 +69,39 @@ export const theme = createTheme({
         radius: "md",
       },
       styles: (theme) => ({
-        input: {
-          borderColor: theme.colors.success[4],
-          "&:focus": {
-            borderColor: theme.colors.primary[6],
-            boxShadow: `0 0 0 1px ${theme.colors.primary[1]}`,
-          },
-        },
+        input: {},
         label: {
           fontWeight: 400,
           color: theme.colors.secondary[9],
+        },
+      }),
+    }),
+    PasswordInput: PasswordInput.extend({
+      defaultProps: {
+        variant: "default",
+        size: "sm",
+        radius: "md",
+      },
+      styles: (theme) => ({
+        label: {
+          fontWeight: 400,
+          color: theme.colors.secondary[9],
+          fontSize: theme.fontSizes.sm,
+        },
+        innerInput: {
+          "&:focus": {
+            borderColor: theme.colors.success[7],
+          },
+          "&:hover": {
+            borderColor: theme.colors.warning[9],
+          },
+        },
+        error: {
+          fontSize: theme.fontSizes.xs,
+          color: theme.colors.danger[6],
+        },
+        visibilityToggle: {
+          color: theme.colors.secondary[6],
         },
       }),
     }),

@@ -30,6 +30,7 @@ const UserTask = () => {
         onSubmit={onSubmit((values) => {
           console.log("values", values);
         })}
+        style={{ width: "100%" }}
       >
         <Stack>
           <TextInput
@@ -42,7 +43,7 @@ const UserTask = () => {
           <Textarea
             withAsterisk
             label="Description"
-            placeholder="Enter a Placeholder"
+            placeholder="Enter a Description"
             {...getInputProps("description")}
             key={key("description")}
           />

@@ -6,7 +6,7 @@ import PrivateNavbar from "./navbar";
 const PrivateLayout = () => {
   usePageData();
   return (
-    <AppShell navbar={{ width: 60, breakpoint: "xs" }}>
+    <AppShell navbar={{ width: 160, breakpoint: "xs" }}>
       <AppShell.Navbar>
         <PrivateNavbar />
       </AppShell.Navbar>
