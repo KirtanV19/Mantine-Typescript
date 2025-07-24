@@ -2,7 +2,7 @@
 import { usePageData } from "../../hooks/use-page-data";
 import CustomTable from "../../components/custom-table";
 import { Box, Button } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { apiAsyncHandler } from "../../utils/helper";
 import { api } from "../../api";
 import useAuth from "../../auth/use-auth";
@@ -15,16 +15,19 @@ const Dashboard = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState<string | null>(null);
 
-  const response = apiAsyncHandler(() => api.tasks.getAll({}));
-  console.log("response: ", response);
-
-  if (!response || !response?.data || response?.data?.length === 0) {
-    setError("Email not found!");
-    return;
-  }
-  if (response) {
-    setData(response?.data);
-  }
+  useEffect(() => {
+    apiAsyncHandler(
+      async () => {
+        const res = await api.tasks.getAll({});
+        console.log("res: ", res);
+        setData(res?.data);
+      },
+      (error: any) => {
+        setError(error);
+        setData([]);
+      }
+    );
+  }, []);
 
   const columns = [
     {
@@ -71,6 +74,7 @@ const Dashboard = () => {
 
   return (
     <Box>
+      {error && <div style={{ color: "red" }}>{error}</div>}
       <CustomTable data={data} columns={columns} />
     </Box>
   );

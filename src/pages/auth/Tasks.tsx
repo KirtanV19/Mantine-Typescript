@@ -3,25 +3,38 @@ import { Box } from "@mantine/core";
 import { usePageData } from "../../hooks/use-page-data";
 import CustomTable from "../../components/custom-table";
 import { apiAsyncHandler } from "../../utils/helper";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Tasks = () => {
   usePageData();
   const [data, setData] = useState([]);
-
   const [error, setError] = useState<string | null>(null);
 
-  const response = apiAsyncHandler(() => api.users.getAll({}));
-  console.log("response: ", response);
+  // useEffect(() => {
+  //   apiAsyncHandler(() => api.tasks.getAll({})).then((response) => {
+  //     if (!response || !response.data || response.data.length === 0) {
+  //       setError("No items found!");
+  //       setData([]);
+  //     } else {
+  //       setData(response.data);
+  //       setError(null);
+  //     }
+  //   });
+  // }, []);
 
-  if (!response || !response?.data || response?.data?.length === 0) {
-    setError("Email not found!");
-    return;
-  }
-
-  if (response) {
-    setData(response?.data);
-  }
+  useEffect(() => {
+    apiAsyncHandler(
+      async () => {
+        const res = await api.tasks.getAll({});
+        console.log("res: ", res);
+        setData(res?.data);
+      },
+      (error: any) => {
+        setError(error);
+        setData([]);
+      }
+    );
+  }, []);
 
   const columns = [
     {
@@ -46,6 +59,7 @@ const Tasks = () => {
 
   return (
     <Box>
+      {error && <div>{error}</div>}
       <CustomTable data={data} columns={columns} />
     </Box>
   );

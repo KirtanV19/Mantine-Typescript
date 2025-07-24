@@ -10,34 +10,34 @@ const CustomTable = ({ data, columns }: TableProps) => {
     <Table striped highlightOnHover withTableBorder withRowBorders={false}>
       <Table.Thead>
         <Table.Tr>
-          {/* {columns.map((column) => {
-            return <Table.Th key={column.id}>{column.label}</Table.Th>;
-          })} */}
+          {columns?.map((column) => (
+            <Table.Th key={column?.id}>{column?.label}</Table.Th>
+          ))}
         </Table.Tr>
       </Table.Thead>
       <Table.Tbody>
-        {/* {data.length <= 0 ? (
+        {data?.length <= 0 ? (
           <Table.Tr>
-            <Table.Td colSpan={columns.length} className="text-center py-4">
+            <Table.Td colSpan={columns?.length} className="text-center py-4">
               No Items Found.
             </Table.Td>
           </Table.Tr>
         ) : (
-          data.map((a, index) => (
-            <tr key={a.id} className="hover:bg-blue-50 transition-colors">
-              {columns.map((column) => (
+          data?.map((a, index) => (
+            <Table.Tr key={a.id} className="hover:bg-blue-50 transition-colors">
+              {columns?.map((column) => (
                 <Table.Td
-                  key={column.id}
+                  key={column?.id}
                   className="px-4 py-2 border-b border-gray-100"
                 >
-                  {column.render
-                    ? column.render({ row: a, rowIndex: index })
-                    : a[column.field_name]}
+                  {column?.render
+                    ? column?.render({ row: a, rowIndex: index })
+                    : a[column?.field_name]}
                 </Table.Td>
               ))}
-            </tr>
+            </Table.Tr>
           ))
-        )} */}
+        )}
       </Table.Tbody>
     </Table>
   );
