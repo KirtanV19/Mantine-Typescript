@@ -35,8 +35,8 @@ export const router = createBrowserRouter([
     Component: AuthLayout,
     children: [
       { ...AUTH_ROUTES.INDEX, Component: WelcomeUser },
-      { ...AUTH_ROUTES.DASHBOARD, Component: Dashboard },
-      { ...AUTH_ROUTES.TASKS, Component: Tasks },
+      { ...AUTH_ROUTES.DASHBOARD, Component: Tasks },
+      { ...AUTH_ROUTES.TASKS, Component: Dashboard },
     ],
   },
   {
