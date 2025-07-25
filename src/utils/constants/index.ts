@@ -39,3 +39,9 @@ export const AUTH_MESSAGES = {
 
 export const LOCAL_STORAGE_KEY = "root";
 export const CACHED_URL_LOCAL_STORAGE_KEY = "cached-redirect-url";
+
+export const ANCHOR_ITEMS = [
+  { label: "Login", id: 1 },
+  { label: "Register", id: 2 },
+  { label: "Forgot Password", id: 3 },
+];
