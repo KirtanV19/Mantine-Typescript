@@ -5,6 +5,7 @@ import {
   localStorageColorSchemeManager,
   rem,
   PasswordInput,
+  NavLink,
 } from "@mantine/core";
 import {
   primary,
@@ -106,6 +107,25 @@ export const theme = createTheme({
         },
         visibilityToggle: {
           color: theme.colors.secondary[4],
+        },
+      }),
+    }),
+    NavLink: NavLink.extend({
+      defaultProps: {
+        variant: "light",
+      },
+      styles: (theme, { active }) => ({
+        root: {
+          fontWeight: 500,
+          textTransform: "capitalize",
+          color: active ? theme.colors.primary[7] : theme.colors.secondary[7],
+          backgroundColor: active ? theme.colors.primary[0] : undefined,
+          "&:hover": {
+            backgroundColor: theme.colors.primary[1],
+          },
+        },
+        label: {
+          fontSize: theme.fontSizes.sm,
         },
       }),
     }),

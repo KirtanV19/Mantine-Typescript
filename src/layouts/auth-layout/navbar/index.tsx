@@ -1,19 +1,30 @@
-import { Box, Stack, NavLink } from "@mantine/core";
+import { Box, Stack } from "@mantine/core";
 import Icon from "../../../assets/icons/icons";
 import { ICONS } from "../../../assets/icons";
+import { AUTH_ROUTES } from "../../../routing/routes";
+import CustomNavLink from "../../../components/custom-navlink";
 
 const AuthNavbar = () => {
+  const AUTH_NAVITEMS = [
+    {
+      label: "Tasks",
+      href: AUTH_ROUTES.TASKS.url,
+      icon: <Icon component={ICONS.IconListDetails} />,
+    },
+    {
+      label: "Users",
+      href: AUTH_ROUTES.DASHBOARD.url,
+      icon: <Icon component={ICONS.IconUsers} />,
+    },
+  ];
+
   return (
     <Box>
       <Stack>
-        <NavLink
-          label="Tasks"
-          leftSection={<Icon component={ICONS.IconListDetails} />}
-        />
-        <NavLink
-          label="Users"
-          leftSection={<Icon component={ICONS.IconUsers} />}
-        />
+        {AUTH_NAVITEMS.map((item) => {
+          const { href, icon, label } = item;
+          return <CustomNavLink {...{ href, icon, label }} />;
+        })}
       </Stack>
     </Box>
   );

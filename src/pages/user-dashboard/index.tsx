@@ -55,12 +55,12 @@ const UserDashboard = () => {
         field_name: "dueDate",
         render: ({ row }) => row.dueDate,
       },
-      {
-        id: "action",
-        label: "Action",
-        field_name: "action",
-        render: ({ row }) => <Button>Edit</Button>,
-      },
+      // {
+      //   id: "action",
+      //   label: "Action",
+      //   field_name: "action",
+      //   render: ({ row }) => <Button>Edit</Button>,
+      // },
     ],
     []
   );
