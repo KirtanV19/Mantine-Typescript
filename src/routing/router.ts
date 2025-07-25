@@ -1,5 +1,5 @@
 import { createBrowserRouter, redirect } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { getAuth } from "../auth";
 
 // Routes
 import { PLAIN_ROUTES, AUTH_ROUTES, PRIVATE_ROUTES } from "./routes";
@@ -20,6 +20,24 @@ import UserTask from "../pages/user-task";
 import PageNotFound from "../components/PageNotFound";
 import WelcomeUser from "../pages/user-welcome";
 
+const authLayoutLoader = () => {
+  const { isAuthenticated, redirectedUrl, role } = getAuth({});
+
+  if (!isAuthenticated || role !== "admin") {
+    return redirect(redirectedUrl);
+  }
+  return null;
+};
+
+const privateLayoutLoader = () => {
+  const { isAuthenticated, redirectedUrl, role } = getAuth({});
+  // Only allow authenticated users (any role)
+  if (!isAuthenticated || role !== "user") {
+    return redirect(redirectedUrl); // redirect to login
+  }
+  return null; // allow access
+};
+
 export const router = createBrowserRouter([
   {
     ...PLAIN_ROUTES.layout,
@@ -34,30 +52,7 @@ export const router = createBrowserRouter([
   {
     ...AUTH_ROUTES.layout,
     Component: AuthLayout,
-    loader: () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        try {
-          const decoded = jwtDecode(token) as { exp?: number; role?: string };
-
-          // Check expiration (optional, based on JWT claims)
-          if (decoded.exp && Date.now() >= decoded.exp * 1000) {
-            return redirect("/login"); // Token expired
-          }
-
-          if (decoded.role === "admin") {
-            return redirect(AUTH_ROUTES.DASHBOARD.url);
-          }
-
-          return null; // Allow route to render
-        } catch (err) {
-          console.error(err);
-          return redirect(PLAIN_ROUTES.LOGIN.url); // Invalid token
-        }
-      }
-      return null;
-    },
-
+    loader: authLayoutLoader,
     children: [
       { ...AUTH_ROUTES.INDEX, Component: WelcomeUser },
       { ...AUTH_ROUTES.DASHBOARD, Component: Tasks },
@@ -67,6 +62,7 @@ export const router = createBrowserRouter([
   {
     ...PRIVATE_ROUTES.layout,
     Component: PrivateLayout,
+    loader: privateLayoutLoader,
     children: [
       { ...PRIVATE_ROUTES.INDEX, Component: WelcomeUser },
       { ...PRIVATE_ROUTES.USER_DASHBOARD, Component: UserDashboard },
