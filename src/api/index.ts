@@ -34,4 +34,27 @@ export const api = {
         ...configs,
       }),
   },
+  auth: {
+    register: ({ data, ...configs }: { data: any; [key: string]: any }) =>
+      client({
+        url: "/register",
+        method: METHODS.POST,
+        data,
+        ...configs,
+      }),
+    login: ({ data, ...configs }: { data: any; [key: string]: any }) =>
+      client({
+        url: "/login",
+        method: METHODS.POST,
+        data,
+        ...configs,
+      }),
+    forgotPassword: ({ data, ...configs }: { data: any; [key: string]: any }) =>
+      client({
+        url: "/forgot-password",
+        method: METHODS.POST,
+        data,
+        ...configs,
+      }),
+  },
 };

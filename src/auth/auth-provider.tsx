@@ -1,5 +1,11 @@
 import { createContext, type ReactNode, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+import { LOCAL_STORAGE_KEY } from "../utils/constants";
+import {
+  getLocalStorage,
+  removeLocalStorage,
+  setLocalStorage,
+} from "../utils/helper";
 
 interface User {
   id: number;
@@ -22,7 +28,7 @@ interface AuthProviderProps {
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [token, setToken] = useState<string | null>(() =>
-    localStorage.getItem("token")
+    getLocalStorage(LOCAL_STORAGE_KEY)
   ); // Lazy initialization of token
 
   const [user, setUser] = useState<User | null>(null);
@@ -41,12 +47,12 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   }, [token]);
 
   const login = (newToken: string) => {
-    localStorage.setItem("token", newToken);
+    setLocalStorage(LOCAL_STORAGE_KEY, newToken);
     setToken(newToken);
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
+    removeLocalStorage(LOCAL_STORAGE_KEY);
     setToken(null);
     setUser(null);
   };

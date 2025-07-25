@@ -1,5 +1,6 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios";
-
+import { LOCAL_STORAGE_KEY } from "../utils/constants";
+import { getLocalStorage } from "../utils/helper";
 export const METHODS = {
   POST: "post",
   GET: "get",
@@ -22,7 +23,7 @@ const axiosInstance: AxiosInstance = axios.create(axiosConfig);
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = getLocalStorage(LOCAL_STORAGE_KEY);
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`; // Send Token on Every Request
