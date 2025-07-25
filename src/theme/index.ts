@@ -84,33 +84,22 @@ export const theme = createTheme({
       },
       styles: (theme) => ({
         input: {
-          borderColor: theme.colors.secondary[0],
-
-          // transition: "border-color 0.2s ease",
-
+          borderColor: theme.colors.warning[3],
+        },
+        innerInput: {
           "&:hover": {
-            borderColor: theme.colors.warning[7],
+            border: `1px solid ${theme.colors.warning[9]}`,
           },
-
-          // "&:focus": {
-          //   borderColor: `${theme.colors.success[6]} !important`,
-          //   boxShadow: `0 0 0 1px ${theme.colors.success[4]}`,
-          // },
+          "&:focus": {
+            border: `1px solid ${theme.colors.success[5]} !important`,
+            outline: "none",
+          },
         },
         label: {
           fontWeight: 400,
           color: theme.colors.secondary[9],
           fontSize: theme.fontSizes.sm,
         },
-        // innerInput: {
-        //   borderColor: theme.colors.success[3],
-        //   "&:focus": {
-        //     borderColor: theme.colors.success[7],
-        //   },
-        //   "&:hover": {
-        //     borderColor: theme.colors.warning[9],
-        //   },
-        // },
         error: {
           fontSize: theme.fontSizes.xs,
           color: theme.colors.danger[6],

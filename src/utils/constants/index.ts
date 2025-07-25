@@ -36,3 +36,6 @@ export const AUTH_MESSAGES = {
   failurePassword: "Failed to reset password",
   logout: "You have been logged out.",
 };
+
+export const LOCAL_STORAGE_KEY = "root";
+export const CACHED_URL_LOCAL_STORAGE_KEY = "cached-redirect-url";
