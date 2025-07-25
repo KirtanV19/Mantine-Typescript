@@ -36,22 +36,21 @@ const Login = () => {
   });
 
   const handleSubmit = async (values: FormValues) => {
-    console.log("values", values);
+    setError(null);
+    setSuccess(null);
 
+    // Send credentials to backend for authentication
     const response = await apiAsyncHandler(() =>
-      api.users.getAll({ params: { email: values.email } })
+      api.auth.login({ data: values })
     );
-    console.log("response", response);
 
-    if (!response || !response?.data || response?.data?.length === 0) {
-      setError(AUTH_MESSAGES.notFound("email"));
+    if (!response || !response?.data?.accessToken) {
+      setError(AUTH_MESSAGES.invalidLogin);
       return;
     }
 
-    if (response?.data[0]?.email === values.email) {
-      setSuccess(AUTH_MESSAGES.login);
-      login();
-    }
+    setSuccess(AUTH_MESSAGES.login);
+    login(response?.data.accessToken); // Store JWT in localStorage
   };
 
   return (
