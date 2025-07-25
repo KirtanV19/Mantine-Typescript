@@ -88,9 +88,9 @@ export const theme = createTheme({
 
           // transition: "border-color 0.2s ease",
 
-          // "&:hover": {
-          //   borderColor: theme.colors.warning[7],
-          // },
+          "&:hover": {
+            borderColor: theme.colors.warning[7],
+          },
 
           // "&:focus": {
           //   borderColor: `${theme.colors.success[6]} !important`,

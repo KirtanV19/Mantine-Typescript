@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { VALIDATION_MESSAAGE as message } from "../constants";
+import { VALIDATION_MESSAGE as message } from "../constants";
 import { regex } from "./regex";
 import { ROLES } from "../constants";
 const { hasDigit, hasLowercaseLetter, hasSpecialChar, hasUppercaseLetter } =

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios";
 
 export const METHODS = {
   POST: "post",
@@ -10,7 +10,7 @@ export const METHODS = {
   OPTIONS: "options",
 };
 
-const axiosConfig = {
+const axiosConfig: AxiosRequestConfig = {
   baseURL: "http://localhost:3000",
   withCredentials: true,
   headers: {
@@ -18,7 +18,7 @@ const axiosConfig = {
   },
 };
 
-const axiosInstance = axios.create(axiosConfig);
+const axiosInstance: AxiosInstance = axios.create(axiosConfig);
 
 axiosInstance.interceptors.request.use(
   (config) => {
