@@ -2,7 +2,7 @@ import { Box, Flex, Group, Anchor, Container } from "@mantine/core";
 import { PLAIN_ROUTES } from "../../../routing/routes";
 import { useMantineTheme } from "@mantine/core";
 import { ANCHOR_ITEMS, APP_TITLE } from "../../../utils/constants";
-
+import { Link } from "react-router-dom";
 const PlainNavbar = () => {
   const theme = useMantineTheme();
 
@@ -24,7 +24,8 @@ const PlainNavbar = () => {
               <Anchor
                 key={item.id}
                 c={theme.colors.light[0]}
-                href={
+                component={Link}
+                to={
                   item.label === "Login"
                     ? PLAIN_ROUTES.LOGIN.url
                     : item.label === "Register"
